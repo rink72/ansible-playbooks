@@ -1,0 +1,21 @@
+---
+
+- name: AT Module testing
+  hosts: all
+  become: yes
+  gather_facts: no
+
+
+
+  tasks:
+
+  - name: Ensure AT is installed
+    yum:
+     name: at
+     state: latest
+
+
+  - name: Add a AT tasks in ten minutes
+    at:
+     command: "ls -l /etc > /tmp/ls-output.txt"
+     state: absent

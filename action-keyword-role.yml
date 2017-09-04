@@ -1,0 +1,35 @@
+---
+
+- name: Test using action keyword
+  hosts: all
+  gather_facts: no
+  become: yes
+
+  vars:
+  
+  - playbook_name: action-keywork-role.yml
+  - log_file: /tmp/ansible-runs.log
+
+  tasks:
+
+
+  - name: Log start time
+    shell: "echo `date` {{ playbook_name }} Started. >> {{ log_file}}"
+
+  - name: Ping using action
+    action: ping
+    run_once: yes
+
+  - name: Install apache
+    yum:
+     name: httpd
+     state: latest
+    async: 300
+    poll: 1
+
+  - name: yum using action
+    action: yum name=tree state=latest
+
+
+  - name: Log finish time
+    shell: "echo `date` {{ playbook_name }} Completed. >> {{ log_file }}"

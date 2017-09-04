@@ -1,0 +1,26 @@
+---
+
+
+# Testing if we can get hostname in task without gathering facts
+
+- name: Test looping and hostname var
+  hosts: all
+  gather_facts: no
+
+
+
+  tasks:
+  
+  - name: Debug task
+    debug:
+     var: inventory_hostname
+    delegate_to: 127.0.0.1
+
+
+  - name: Write to a file
+    local_action:
+     module: lineinfile
+     line: "{{ inventory_hostname }}"
+     path: /tmp/servers.txt
+     state: present
+     create: yes

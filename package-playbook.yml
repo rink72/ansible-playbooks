@@ -1,0 +1,16 @@
+---
+
+- name: Test Package module
+  hosts: slaves
+  gather_facts: yes                   # We need this for package module to work
+  become: yes
+
+
+
+  tasks:
+
+
+  - name: Update all packages
+    package:
+     name: "*"
+     state: latest

@@ -1,0 +1,23 @@
+---
+
+# DNF Test playbook
+
+
+- name: Test playbook for DNF
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+
+  - name: Make sure DNF is enabled/installed
+    yum:
+     name: dnf
+     state: present
+
+
+
+  - name: Install httpd using DNF
+    dnf:
+     name: httpd
+     state: latest

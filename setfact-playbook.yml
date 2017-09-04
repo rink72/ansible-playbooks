@@ -1,0 +1,48 @@
+---
+
+- name: Test setfact module playbook
+  hosts: all
+  become: no
+  gather_facts: no
+
+
+  tasks:
+  
+
+  - name: Check if fact is currently present
+    debug:
+     var: "testfact"
+
+
+
+  - name: Set the fact
+    set_fact:
+     testfact: "This is here!"
+
+
+  - name: Check if fact now has a value
+    debug:
+     var: "testfact"
+
+
+
+- name: Second playbook to test fact is still there
+  hosts: slaves
+  become: no
+  gather_facts: no
+
+
+  tasks:
+
+  - name: Test if fact is there
+    debug:
+     var: "testfact"
+
+
+  - name: Setup
+    setup:
+    register: setup_facts
+
+
+  - debug:
+     var: "setup_facts"

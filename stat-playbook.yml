@@ -1,0 +1,23 @@
+---
+
+- name: Test stat module
+  hosts: slaves
+  gather_facts: no
+
+
+  tasks:
+
+  - name: Get stat for /etc/hosts
+    stat:
+     path: /etc/hosts2
+    register: hosts_stat
+
+
+  - name: Output stat data
+    debug:
+     var: "hosts_stat"
+
+  - name: Test status of file
+    debug:
+     msg: "Whats up homies"
+    when: hosts_stat.stat.isdir is defined and hosts_stat.stat.isdir

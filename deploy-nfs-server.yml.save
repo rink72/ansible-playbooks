@@ -1,0 +1,13 @@
+---
+
+- name: Deploy NFS server
+  hosts: slaves
+  become: yes
+  gather_facts: yes
+
+
+  vars:
+   dist: RedHat
+   nfs_pkg: nfs-utils
+   nfslibs_pkg: nfs-utils-lib
+   

@@ -1,0 +1,15 @@
+---
+
+- name: Test includes with parameters
+  hosts: slaves
+  gather_facts: no
+ 
+
+  tasks:
+
+  - include: display-user-details.yml user_name="Sam Beardman" user_path="/tmp/nope/"
+
+
+  - name: After include
+    debug:
+     msg: "hi!"

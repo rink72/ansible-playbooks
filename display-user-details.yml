@@ -1,0 +1,9 @@
+---
+
+- name: Display Username
+  debug:
+   var: user_name
+
+- name: Display path
+  debug:
+   var: user_path

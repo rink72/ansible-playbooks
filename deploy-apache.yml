@@ -1,0 +1,86 @@
+---
+
+- name: Deploy apache playbook
+  become: yes
+  hosts: all
+  gather_facts: yes
+
+  vars:
+   apache_pkg: httpd
+   apache_version: 2.4
+   apache_dir: /opt/www/site1
+   apache_fqdn: server.test.com
+
+
+  tasks:
+
+
+  - name: Install apache
+    yum:
+     name: "{{ apache_pkg }}"
+     state: latest
+
+  - name: Create web directory
+    file:
+     path: "{{ apache_dir }}"
+     state: directory
+     owner: root
+     group: root
+     mode: 0755
+    
+  - name: Copy apache config file
+    copy:
+     src: ../files/apache-config/httpd.conf
+     dest: /etc/httpd/conf/httpd.conf
+     owner: root
+     group: root
+     mode: 0644
+
+  - name: Create vhosts directory
+    file:
+     path: /etc/httpd/vhost.d
+     state: directory
+     mode: 0755
+     owner: root
+     group: root
+
+  - name: Copy vhost data
+    unarchive:
+     src: ../files/apache-data/sitecode.tar.gz
+     dest: "{{ apache_dir }}"
+     owner: root
+     group: root
+     mode: 0644
+
+
+#  - name: Copy vhost config file
+#    copy:
+#     src: ../files/apache-config/vhost.conf
+#     dest: /etc/httpd/vhost.d/default.conf
+#     owner: root
+#     group: root
+#     mode: 0644
+
+  - name: Start httpd
+    service:
+     name: httpd
+     state: restarted
+     enabled: yes
+
+
+  - name: Wait for port 80 to be available
+    wait_for:
+     host: "{{ inventory_hostname }}"
+     port: 80
+     delay: 5
+     timeout: 20
+
+  - name: Get webpage content
+    uri:
+     url: "http://{{ inventory_hostname }}"
+     return_content: yes
+    register: page_content
+
+  - name: Fail if page content is incorrect
+    fail:
+    when: "'This is a website!!!' not in page_content.content"
