@@ -1,0 +1,10 @@
+[masters]
+rink722.mylabserver.com
+rink726.mylabserver.com
+
+
+[slaves]
+rink721.mylabserver.com
+rink723.mylabserver.com
+rink724.mylabserver.com
+rink725.mylabserver.com
