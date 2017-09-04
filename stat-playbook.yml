@@ -9,7 +9,7 @@
 
   - name: Get stat for /etc/hosts
     stat:
-     path: /etc/hosts2
+     path: /etc/hosts
     register: hosts_stat
 
 
