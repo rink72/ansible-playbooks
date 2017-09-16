@@ -1,0 +1,12 @@
+---
+
+- name: Test conencting to slaves
+  hosts: slaves
+  become: no
+  gather_facts: no
+
+
+  tasks:
+
+  - name: Ping
+    ping:
