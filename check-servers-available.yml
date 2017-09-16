@@ -1,7 +1,7 @@
 ---
 
 - name: Test conencting to slaves
-  hosts: slaves
+  hosts: all
   become: no
   gather_facts: no
 
