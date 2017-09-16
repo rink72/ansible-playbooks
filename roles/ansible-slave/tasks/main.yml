@@ -27,7 +27,7 @@
    user: jenkins
    state: present
    key: "{{ lookup('file', '/var/lib/jenkins/.ssh/id_rsa.pub') }}"
-
+  ignore_errors: yes
 # Give then sudo rights with no passwd
 
 - name: Add ansible sudo rights
