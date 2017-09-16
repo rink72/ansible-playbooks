@@ -1,0 +1,16 @@
+---
+
+- name: Install nano
+  hosts: group1
+  become: yes
+  gather_facts: no
+
+
+  tasks:
+
+  - name: Install nano via yum
+    yum:
+    name:
+     - nano
+    state: latest
+
