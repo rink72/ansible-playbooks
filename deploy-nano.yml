@@ -10,7 +10,7 @@
 
   - name: Install nano via yum
     yum:
-    name:
-     - nano
-    state: latest
+     name:
+      - nano
+     state: latest
 
