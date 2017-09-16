@@ -1,0 +1,50 @@
+---
+# tasks file for configure-slave-playbook
+
+
+- name: Create ansible user
+  user:
+   name: ansible
+   state: present
+   generate_ssh_key: yes
+
+- name: Create jenkins user
+  user:
+   name: jenkins
+   state: present
+   generate_ssh_key: yes
+
+# Copy ssh keys to server
+
+- name: Copy ansible SSH key to authorized keys
+  authorized_key:
+   user: ansible
+   state: present
+   key: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
+
+- name: Copy jenkins SSH key to authorized keys
+  authorized_key:
+   user: jenkins
+   state: present
+   key: "{{ lookup('file', '/var/lib/jenkins/.ssh/id_rsa.pub') }}"
+
+# Give then sudo rights with no passwd
+
+- name: Add ansible sudo rights
+  lineinfile:
+   line: "ansible	ALL=(ALL)	NOPASSWD: ALL"
+   path: /etc/sudoers
+   state: present
+
+- name: Add jenkins sudo rights
+  lineinfile:
+   line: "jenkins	ALL=(ALL)	NOPASSWD: ALL"
+   path: /etc/sudoers
+   state: present
+
+
+- name: Restart SSH service
+  service:
+   name: sshd
+   state: restarted
+
