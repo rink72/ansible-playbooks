@@ -17,17 +17,11 @@
 # Copy ssh keys to server
 
 - name: Copy ansible SSH key to authorized keys
-  authorized_key:
-   user: ansible
-   state: present
-   key: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
+  file:
+   src: id_rsa.pub
+   dest: /home/ansible/.ssh/id_rsa.pub
 
-- name: Copy jenkins SSH key to authorized keys
-  authorized_key:
-   user: jenkins
-   state: present
-   key: "{{ lookup('file', '/var/lib/jenkins/.ssh/id_rsa.pub') }}"
-  ignore_errors: yes
+
 # Give then sudo rights with no passwd
 
 - name: Add ansible sudo rights
@@ -35,13 +29,6 @@
    line: "ansible	ALL=(ALL)	NOPASSWD: ALL"
    path: /etc/sudoers
    state: present
-
-- name: Add jenkins sudo rights
-  lineinfile:
-   line: "jenkins	ALL=(ALL)	NOPASSWD: ALL"
-   path: /etc/sudoers
-   state: present
-
 
 - name: Restart SSH service
   service:
