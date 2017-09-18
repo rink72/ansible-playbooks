@@ -1,8 +1,18 @@
 ---
 # tasks file for ansible
 
+- name: Update all packages
+  yum:
+   name: *
+   state: latest
+
 - name: Install ansible
   package:
    name: ansible
    state: latest
+
+- name: Copy ansible config file
+  file:
+   src: ansible.cfg
+   dest: /etc/ansible/ansible.cfg
   
