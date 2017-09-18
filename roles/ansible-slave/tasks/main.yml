@@ -17,10 +17,10 @@
 # Copy ssh keys to server
 
 - name: Copy ansible SSH key to authorized keys
-  file:
-   src: id_rsa.pub
-   dest: /home/ansible/.ssh/id_rsa.pub
-
+  authorized_key:
+   user: ansible
+   key: "{{ lookup('file', 'id_rsa.pub') }}"
+   state: present
 
 # Give then sudo rights with no passwd
 
