@@ -1,0 +1,10 @@
+---
+
+- name: Install ansible role
+  become: yes
+  gather_facts: yes
+  hosts: slaves
+
+
+  roles:
+   - ansible

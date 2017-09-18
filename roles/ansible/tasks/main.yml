@@ -1,0 +1,8 @@
+---
+# tasks file for ansible
+
+- name: Install ansible
+  package:
+   name: ansible
+   state: latest
+  
