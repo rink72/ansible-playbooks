@@ -1,0 +1,16 @@
+---
+
+- name: Deploy VIM to all servers
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+
+  tasks:
+
+  - name: Deploy VIM using package module
+    package:
+     name: vim
+     state: latest
+
+
