@@ -1,0 +1,27 @@
+---
+
+- name: Create custom facts files
+  hosts: all
+  become: yes
+  gather_facts: no
+
+
+  tasks:
+
+  - name: Create individual files and add variables to them
+    lineinfile: 
+     path: "/etc/ansible/facts.d/{{ inventory_hostname }}.fact"
+     line: |
+             [testing]
+             m_name={{ inventory_hostname }}
+     state: present
+     create: yes
+
+  - name: Reload facts
+    setup:
+
+
+
+  - name: Check if var exists
+    debug:
+     var: ansible_local

@@ -1,0 +1,11 @@
+---
+
+- name: Install pre-reqs
+  yum:
+   name: "{{ item }}"
+   state: present
+  with_items:
+   - php
+   - php-gd
+   - php-pear
+   - php-mysql

@@ -1,0 +1,23 @@
+---
+
+- name: Create a file and add the hostname to it
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+   - filepath: /opt/datafile
+
+  tasks:
+
+   - name: Make sure file exists
+     file:
+      dest: "{{ filepath }}"
+      mode: 0644
+      state: touch
+
+   - name: Add hostname to file
+     lineinfile:
+      path: "{{ filepath }}"
+      line: "{{ inventory_hostname }}"
+      state: present

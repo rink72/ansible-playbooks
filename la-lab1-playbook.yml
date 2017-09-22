@@ -1,0 +1,14 @@
+---
+
+- name: Run LA Lab1 Role
+  hosts: all
+  become: yes
+  gather_facts: no
+  serial:
+         - "1%"
+         - "5%"
+         - "50%"
+
+  roles:
+
+   - role: la-lab1-role

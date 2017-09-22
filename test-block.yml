@@ -1,0 +1,50 @@
+---
+
+- name: Test block code
+  hosts: localhost
+  become: no
+  gather_facts: no
+
+
+  tasks:
+
+  - name: Block 1 test
+    block:
+     - name: Install nano
+       yum:
+        name: nano
+        state: present
+     
+     - name: Print test message
+       debug:
+        msg: "Test Message"
+
+
+  - name: Block 2 test
+    block:
+     - yum:
+        name: nano
+        state: present
+     - debug:
+        msg: "Hi!"
+
+
+
+  - name: Test error handling block
+    block:
+     - name: Force true
+       shell: /bin/true
+    rescue:
+     - name: Print message
+       debug:
+        msg: "Error hit"
+    always:
+     - name: Print done message
+       debug:
+        msg: "All done"
+
+
+
+  - name: Check if host is still processing events
+    debug:
+     msg: "{{ inventory_hostname }} - Still up and running"

@@ -1,0 +1,19 @@
+---
+
+- name: Deploy and encrypted file to servers
+  hosts: all
+  become: no
+  gather_facts: no
+
+  vars:
+   file_src: ./files/file-to-copy.txt
+   file_dest: "/tmp/{{ inventory_hostname }}.txt"
+
+
+  tasks:
+
+  - name: Decrypt and deploy file to servers
+    copy:
+     src: "{{ file_src }}"
+     dest: "{{ file_dest }}"
+

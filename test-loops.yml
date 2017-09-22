@@ -1,0 +1,53 @@
+---
+
+- name: Test nested loops
+  hosts: localhost
+  become: no
+  gather_facts: no
+  connection: local
+
+  vars:
+   - users:
+      alice:
+       name: Alice Appleworth
+       telephone: 123-456-7890
+      bob:
+       name: Bob Bananarama
+       telephone: 987-654-3210
+
+  tasks:
+   
+   # This will run debug three times since the list is flattened
+   - debug:
+      msg: "{{ item }}"
+     vars:
+      nested_list:
+       - - one
+         - two
+         - three
+     with_items: "{{ nested_list }}"
+
+   # This will run debug once with the three items
+   - debug:
+      msg: "{{ item }}"
+     vars:
+      nested_list:
+       - - one
+         - two
+         - three
+     with_items:
+      - "{{ nested_list }}"
+
+
+   - name: give users access to multiple databases
+     debug:
+       msg: "{{ item[0] }} {{ item[1] }}"
+     with_nested:
+       - [ 'alice', 'bob' ]
+       - [ 'clientdb', 'employeedb', 'providerdb' ]
+
+
+   - name: Print phone records
+     debug:
+      msg: "User {{ item.key }} is {{ item.value.name }} ({{ item.value.telephone }})"
+     with_dict: "{{ users }}"

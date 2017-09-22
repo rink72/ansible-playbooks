@@ -1,0 +1,7 @@
+[group1]
+server[01:50] ansible_host=localhost
+
+
+[group2]
+server[51:99] ansible_host=localhost
+
